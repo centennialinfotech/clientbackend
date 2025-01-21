@@ -17,7 +17,7 @@ const sheetData = new mongoose.Schema({
     type: String,
   },
   dateApplied: {
-    type: String,
+    type: Date,
   },
   jobBoard: {
     type: String,
