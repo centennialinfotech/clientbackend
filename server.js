@@ -38,7 +38,7 @@ app.post("/upload", upload.single("file"), async (req, res) => {
         email: d["Email"],
         phone: d["Phone"],
         address: d["Address"],
-        dateApplied: d["Date Applied"] ? new Date(d["Date Applied"]) : null,
+        dateApplied: d["Date Applied"],
         jobBoard: d["Job Board"],
         hiringCompany: d["Hiring Company"],
         jobTitle: d["Job title"],
@@ -68,6 +68,24 @@ app.get("/api/data", async (req, res) => {
     res
       .status(500)
       .json({ message: "Failed to fetch data", error: err.message });
+  }
+});
+
+app.delete("/api/data/:id", async (req, res) => {
+  try {
+    const id = req.params.id;
+    const deletedData = await Data.findByIdAndDelete(id);
+    console.log(id);
+    console.log(deletedData);
+    if (!deletedData) {
+      return res.status(404).json({ message: "Data not Found" });
+    }
+    console.log(deletedData);
+    res.json({ message: "Data deleted successfully" });
+  } catch (err) {
+    res
+      .status(500)
+      .json({ message: "Failed to delete data", error: err.message });
   }
 });
 
